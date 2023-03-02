@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Первый проект на Django</title>
+    </head>
+    <body>
+        <h1>Главная страница</h1>
+        <hr>
+        <p>
+            Добро пожаловать на этот маленький сайт, {{ request.user }}
+        </p>
+        <ul>
+            <li>Автор сайта: {{ author }}</li>
+            <li>Текущий год: {{ year }}</li>
+            <li>Количество страниц на этом сайте: {{ pages }}</li>
+        </ul>
+        <p><a href="/calc/">Калькулятор тут</a>.
+    </body>
+</html>
