@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render
-
+from random import randint
 # Create your views here.
 from first.models import CalcHistory
 
@@ -31,15 +31,17 @@ def calc_page(request):
         b = int(request.GET.get('v2', 0))
         context['a'] = a
         context['b'] = b
+    else:
+        a = randint(86, 93)
+        b = 0
+    record = CalcHistory(
+        date=datetime.now(),
+        first=a,
+        second=b,
+    )
 
-        record = CalcHistory(
-            date=datetime.now(),
-            first=a,
-            second=b,
-        )
+    record.save()
+    records = CalcHistory.objects.order_by('-date')
+    context['history'] = records
 
-        record.save()
-        records = CalcHistory.objects.order_by('-date')
-        context['history'] = records
-
-        return render(request, 'calculator.html', context)
+    return render(request, 'calculator.html', context)
