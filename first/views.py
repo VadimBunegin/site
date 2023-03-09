@@ -26,20 +26,20 @@ def current_date(request):
 
 def calc_page(request):
     context = {}
+    if int(request.GET.get('v1', 0)) > 60:
+        a = int(request.GET.get('v1', 0))
+        b = int(request.GET.get('v2', 0))
+        context['a'] = a
+        context['b'] = b
 
-    a = int(request.GET.get('v1', 0))
-    b = int(request.GET.get('v2', 0))
-    context['a'] = a
-    context['b'] = b
+        record = CalcHistory(
+            date=datetime.now(),
+            first=a,
+            second=b,
+        )
 
-    record = CalcHistory(
-        date=datetime.now(),
-        first=a,
-        second=b,
-    )
+        record.save()
+        records = CalcHistory.objects.order_by('-date')
+        context['history'] = records
 
-    record.save()
-    records = CalcHistory.objects.order_by('-date')
-    context['history'] = records
-
-    return render(request, 'calculator.html', context)
+        return render(request, 'calculator.html', context)
