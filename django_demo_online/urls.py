@@ -16,14 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from first.views import index_page, calc_page, current_date
-
-from django.contrib.auth import views as auth_views
+from first.views import get_request, history
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_page),
-    path('calc/', calc_page),
-    path('date/', current_date),
-    path('login/', auth_views.LoginView.as_view())
+    path('get_request/', get_request),
+    path('', history),
 ]

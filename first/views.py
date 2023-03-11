@@ -1,30 +1,9 @@
 from datetime import datetime
-
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.shortcuts import render
 from random import randint
-# Create your views here.
-from first.models import CalcHistory
+from first.models import History
+from django.shortcuts import render
 
-
-def index_page(request):
-    context = {}
-    context['author'] = 'Andrew'
-    context['year'] = 2021
-    context['pages'] = 1
-    return render(request, 'index.html', context)
-
-
-def current_date(request):
-    context = {}
-    context['date'] = datetime.now()
-    context['numbers'] = [10, 20, 30, 40]
-    return render(request, 'date.html', context)
-
-
-
-def calc_page(request):
+def get_request(request):
     context = {}
     if int(request.GET.get('v1', 0)) > 60:
         a = int(request.GET.get('v1', 0))
@@ -34,14 +13,21 @@ def calc_page(request):
     else:
         a = randint(86, 93)
         b = 0
-    record = CalcHistory(
+    record = History(
         date=datetime.now(),
         first=a,
         second=b,
     )
 
     record.save()
-    records = CalcHistory.objects.order_by('-date')
+    records = History.objects.order_by('-date')
     context['history'] = records
 
-    return render(request, 'calculator.html', context)
+    return render(request, 'get_request.html', context)
+
+def history(request):
+    context = {}
+    records = History.objects.order_by('-date')
+    context['history'] = records
+
+    return render(request, 'history.html', context)
