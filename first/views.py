@@ -1,18 +1,15 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from random import randint
 from first.models import History
 from django.shortcuts import render
 
 def get_request(request):
     context = {}
-    if int(request.GET.get('v1', 0)) > 60:
-        a = int(request.GET.get('v1', 0))
-        b = int(request.GET.get('v2', 0))
-        context['a'] = a
-        context['b'] = b
-    else:
-        a = randint(86, 93)
-        b = 0
+    a = int(request.GET.get('v1', 0))
+    b = int(request.GET.get('v2', 0))
+    context['a'] = a
+    context['b'] = b
+
     record = History(
         date=datetime.now(),
         first=a,
