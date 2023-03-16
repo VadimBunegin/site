@@ -6,7 +6,7 @@ from django.shortcuts import render
 def get_request(request):
     context = {}
     a = int(request.GET.get('v1', 0))
-    b = int(request.GET.get('v2', 0))
+    b = float(request.GET.get('v2', 0))
     context['a'] = a
     context['b'] = b
 
